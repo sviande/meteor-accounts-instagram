@@ -1,22 +1,40 @@
 Instagram = {};
 
 Oauth.registerService('instagram', 2, null, function(query) {
+  var oauthResponse = getTokenResponse(query);
+  const instagramUser = getUserInfo(oauthResponse.user_id, oauthResponse.access_token);
 
-  var response = getTokenResponse(query);
-  var accessToken = response.access_token;
-  var identity = response.user;
-  identity.id = parseInt(identity.id, 10);
-
-  var serviceData = _.extend(identity, {accessToken: response.access_token});
-
+  var serviceData = {
+    ...instagramUser,
+    accessToken: oauthResponse.access_token,
+  };
   return {
     serviceData: serviceData,
-    options: {
-      profile: { name: identity.full_name },
-      services: { instagram: identity }
-    }
   };
 });
+
+const getUserInfo = (userID, accessToken) => {
+  const GRAPH_URL = "https://graph.instagram.com/"
+  const URL = `${GRAPH_URL}/${userID}`;
+  const params = {
+    fields: "id,username,media_count,account_type",
+    access_token: accessToken,
+  };
+
+  let instagramUser;
+  try {
+    const result = HTTP.call("GET", URL, {params});
+    if (result.statusCode !== 200) {
+      console.error(result);
+      return;
+    }
+    instagramUser = result.data;
+  } catch (e) {
+    console.error(e);
+  }
+
+  return instagramUser;
+};
 
 var getTokenResponse = function (query) {
   var config = ServiceConfiguration.configurations.findOne({service: 'instagram'});
