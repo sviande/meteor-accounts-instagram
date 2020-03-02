@@ -21,7 +21,7 @@ Instagram.requestCredential = function (options, credentialRequestCompleteCallba
   var flatScope = _.map(scope, encodeURIComponent).join(',');
 
   var loginUrl =
-    'https://instagram.com/oauth/authorize' +
+    'https://api.instagram.com/oauth/authorize' +
       '?client_id=' + config.clientId +
       '&response_type=code' +
       '&scope=' + flatScope +
