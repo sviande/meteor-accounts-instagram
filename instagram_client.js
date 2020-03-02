@@ -14,11 +14,11 @@ Instagram.requestCredential = function (options, credentialRequestCompleteCallba
   }
   var credentialToken = Random.secret();
   var loginStyle = OAuth._loginStyle('instagram', config, options);
-  var scope = (config.scope) || ['basic', 'likes', 'relationships', 'comments'];
+  var scope = (config.scope) || ['user_profile'];
   if (typeof scope === 'string') {
     scope = [scope];
   }
-  var flatScope = _.map(scope, encodeURIComponent).join('+');
+  var flatScope = _.map(scope, encodeURIComponent).join(',');
 
   var loginUrl =
     'https://instagram.com/oauth/authorize' +
