@@ -11,13 +11,4 @@ if (Meteor.isClient) {
     var credentialRequestCompleteCallback = Accounts.oauth.credentialRequestCompleteHandler(callback);
     Instagram.requestCredential(options, credentialRequestCompleteCallback);
   };
-} else {
-  Accounts.addAutopublishFields({
-    forLoggedInUser: ['services.instagram'],
-    forOtherUsers: [
-      'services.instagram.username',
-      'services.instagram.full_name',
-      'services.instagram.profile_picture'
-    ]
-  });
 }
