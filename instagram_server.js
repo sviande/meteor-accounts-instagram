@@ -1,3 +1,4 @@
+import JSONBig from 'bigint-json-native';
 Instagram = {};
 
 Oauth.registerService('instagram', 2, null, function(query) {
@@ -58,7 +59,7 @@ var getTokenResponse = function (query) {
     if (response.error) // if the http response was an error
         throw response.error;
     if (typeof response.content === "string")
-        response.content = JSON.parse(response.content);
+        response.content = JSONBig.parse(response.content);
     if (response.content.error)
         throw response.content;
   } catch (err) {
