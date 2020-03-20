@@ -24,7 +24,7 @@ const getUserInfo = (userID, accessToken) => {
 
   let instagramUser;
   try {
-    const result = HTTP.call("GET", URL, {params});
+    const result = HTTP.get(URL, {params});
     if (result.statusCode !== 200) {
       console.error(result);
       return;
@@ -73,3 +73,5 @@ var getTokenResponse = function (query) {
 Instagram.retrieveCredential = function(credentialToken, credentialSecret) {
   return Oauth.retrieveCredential(credentialToken, credentialSecret);
 };
+
+export {getTokenResponse, getUserInfo};
